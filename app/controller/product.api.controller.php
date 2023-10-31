@@ -13,11 +13,19 @@ class ProductApiController {
         $this->view = new ApiView();
     }
 
-    function getAll(){
+    function get($params = []){
         $products = $this->model->getAllProducts();
-        return $this->view->response($products, 200);
+        if(empty($params)){
+            return $this->view->response($products, 200);
+        }else{
+            $product = $this->model->getProductById($params[':ID']);
+            if(!empty($product)){
+                $this->view->response($product, 200);
+            }else{
+                $this->view->response(['msg' => 'El producto con el id:' .$params[':ID'] .  'no existe'], 404);
+            }
+        }
+        
     }
-
-
 
 }
