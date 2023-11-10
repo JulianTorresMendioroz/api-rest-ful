@@ -59,6 +59,16 @@ class ProductModel extends Model {
         return $product;
     }
 
+    public function getPriceASC($sort, $asc){
+        $query = $this->db->prepare("SELECT * FROM products ORDER BY $sort $asc");
+
+        $query->execute([$sort, $asc]);
+
+        $priceASC = $query->fetchAll(PDO::FETCH_OBJ);
+
+        return $priceASC;
+    }
+
     public function getProductBySeason($season) {
 
         $query = $this->db->prepare('SELECT * FROM products WHERE season = ?');

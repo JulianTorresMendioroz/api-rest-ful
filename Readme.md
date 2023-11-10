@@ -12,8 +12,19 @@ API Restfull - WEB 2
 - Todos los productos: GET -> http://localhost/web2/ecommerce_api/api/productos
 (Si existen los productos, devuelve los mismos, y si no, un error con un mensaje que los productos no existen)
 
-- Producto por ID: GET -> http://localhost/web2/ecommerce_api/api/productos/:id 
+- Producto por ID: GET -> - Todos los productos: GET -> http://localhost/web2/ecommerce_api/api/productos/:id 
 (Si existe el producto devuelve el mismo, y si no, un error con un mensaje que el id especificado no existe)
+
+- ( MIEMBRO A - Ordenado por cualquier campo (opcional)) - Listar coleccion de productos por precio de manera ASCENDENTE: GET -> 
+
+http://localhost/web2/ecommerce_api/api/productos?sort=price&order=asc
+
+(Ordena los productos con precio de forma ascendete)
+
+- (MIEMBRO B - Filtado (opcional)) - Filtrado por oferta: GET -> http://localhost/web2/ecommerce_api/api/productos?offer=1
+(Si hay productos en oferta, los trae, si no da un mensaje de que no hay productos en oferta)
+
+Oferta es el valor: 1 
 
 - Crear un nuevo producto: POST -> http://localhost/web2/ecommerce_api/api/productos
 (Si se agergar el producto devuelve un mensaje de exito, y si no, un error con un mensaje que el producto no se pudo agregar)
@@ -40,7 +51,7 @@ FK_ID_CATEGORY:
 
 Se dividen en 3 categorias, en las cuales cada una tiene su temporada (Invierno, Verano y Otoño) 
 
-- Actualizar un nuevo producto: PUT -> http://localhost/web2/ecommerce_api/api/:id
+- Actualizar un nuevo producto: PUT -> http://localhost/web2/ecommerce_api/api/productos/:id
 (Si se actualiza el producto devuelve un mensaje de exito, y si no, un error con un mensaje que el id especificado no se pudo actualizar)
 
 Para poder actualizar un producto: Debe de tener el siguiente patron: 
@@ -55,7 +66,7 @@ Se le puede actualizar el nombre, descripcion y ID.
 
 ("price": Precio de prueba)
 
-- Eliminar un nuevo producto: DELETE -> http://localhost/web2/ecommerce_api/api/:id
+- Eliminar un nuevo producto: DELETE -> http://localhost/web2/ecommerce_api/api/productos/:id
 (Si se elimina el producto devuelve un mensaje de exito, y si no, un error con un mensaje que el producto con id: "x" no se pudo se pudo eliminar)
 
 

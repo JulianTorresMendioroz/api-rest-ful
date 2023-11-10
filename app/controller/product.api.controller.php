@@ -15,38 +15,51 @@ class ProductApiController extends APIController {
         
     }
 
-    //capturo params si los hay o no
-    function get($params = []) {
+      //capturo params si los hay o no
+      function get($params = []) {
         if (empty($params)) {
-            $filterOffer = 0;
             if (isset($_GET['offer'])) {
                 $filterOffer = $_GET['offer'] == 1;
                 $prodsOffer = $this->model->filterOffer($filterOffer);
-                if ($prodsOffer) {
-                    //Me trae la oferta, pero solo me marca Array (SIN DATOS), para ver si me cumplia la query le puse json_encode
-                    //me trae bien el filtro, pero me lo muestra con " / ", el filtro se cumple pero tengo que solucionar que se muestre
-                    // de forma correcta en POSTMAN
+                
+                if (!empty($prodsOffer)) {
+                    //la consulta se cumple perfecto, pero si no le pongo el json enconde me trae solo (Array)
+                    //en cambio asi, pude verificar que la consulta se hizo correctamente pero lo muestra separados con /
+                    //por los dos json encode de el router y este
                     $this->view->response(['msg' => 'Las ofertas de los productos son: ' . json_encode($prodsOffer)], 200);
                 } else {
                     $this->view->response(['msg' => 'No hay productos con oferta'], 404);
                 }
             } else {
-                //si no hay ningun filtro "offer" mando todos los productos
+                // si no hay parametro == offer, mando todos los prods
                 $products = $this->model->getAllProducts();
                 $this->view->response($products, 200);
             }
         } else {
-            //y si no hay parametros, busco por el producto por id
-            $product = $this->model->getProductById($params[':ID']);
-            if (!empty($product)) {
-                $this->view->response($product, 200);
+            // si no se cumplio/pidieron offer y allprods ordeno
+            if (isset($_GET['price']) && isset($_GET['asc'])) {
+                $sort = $_GET['price'];
+                $asc = $_GET['asc'];
+                
+                if ($sort == 'price' && ($asc == 'asc')) {
+                    $filterASCProducts = $this->model->getPriceASC($sort, $asc);
+                    $this->view->response(['msg' => 'El precio de los productos en forma ASCENDETE son: ' . ($filterASCProducts)], 200);
+                } else {
+                    $this->view->response(['msg' => 'Los parametros no son validos'], 400);
+                }
             } else {
-                $this->view->response(['msg' => 'El producto con el ID: ' . $params[':ID'] . ' no existe'], 404);
+                // si no hay parametros validos, busco el producto por id
+                $product = $this->model->getProductById($params[':ID']);
+                if (!empty($product)) {
+                    $this->view->response($product, 200);
+                } else {
+                    $this->view->response(['msg' => 'El producto con el ID: ' . $params[':ID'] . ' no existe'], 404);
+                }
             }
         }
     }
-
-    public function create() {
+    
+    function create() {
         //traigo los datos del json   
          $body = $this->getData();
 
@@ -64,7 +77,7 @@ class ProductApiController extends APIController {
 
     }
  
-    public function update($params = []) {
+    function update($params = []) {
         $product_id = $params[':ID'];
         $product = $this->model->getProductById($product_id);
 
