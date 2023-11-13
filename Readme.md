@@ -3,7 +3,8 @@ API Restfull - WEB 2
 - En esta API se podra consultar un catalogo de productos, en el cual está dirigido a ecommerce de venta de indumentaria. 
 
 - Miembro B: Torres Mendioroz Julian
-- Miembro A: Barreyra Felipe -> (Hice su parte para que la API este completa) 
+- Miembro A: Barreyra Felipe -> (Hice su parte para que la API este completa, siguiendo mi tematica que es productos para que la API
+    funcione con la parte de los dos miembros, pero con los productos).
 
 (COMO CONSUMIR/USAR LA API:)
 

@@ -68,29 +68,5 @@ class ProductModel extends Model {
 
         return $priceASC;
     }
-
-    public function getProductBySeason($season) {
-
-        $query = $this->db->prepare('SELECT * FROM products WHERE season = ?');
-        
-        $query->execute([$season]);
-        
-        $categories = $query->fetchAll(PDO::FETCH_OBJ);
-        
-        return $categories;
-    }
-
-    public function getCategoryId($season){
- 
-        $query = $this->db->prepare('SELECT * FROM products AS p INNER JOIN category AS c ON p.fk_id_category = c.id WHERE c.season = ?');
-
-        $query->execute();
     
-        $season = $query->fetch(PDO::FETCH_OBJ);
-    
-        return $season;
-
-    }
-    
-
 }
